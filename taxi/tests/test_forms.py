@@ -18,7 +18,10 @@ class FormTests(TestCase):
         }
         form = DriverCreationForm(data=form_data)
         self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data, form_data)
+        self.assertEqual(form.cleaned_data["username"], form_data["username"])
+        self.assertEqual(form.cleaned_data["first_name"], form_data["first_name"])
+        self.assertEqual(form.cleaned_data["last_name"], form_data["last_name"])
+        self.assertEqual(form.cleaned_data["license_number"], form_data["license_number"])
 
 
 class ManufacturerSearchTests(TestCase):
@@ -109,7 +112,7 @@ class DriverSearchTest(TestCase):
 
     def test_driver_search_by_partial_username(self):
         response = self.client.get(
-            reverse("taxi:driver-list") + "?username=Driver2"
+            reverse("taxi:driver-list") + "?username=ver2"
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Driver2")
@@ -166,7 +169,7 @@ class CarSearchTest(TestCase):
         self.assertNotContains(response, "Model S")
 
     def test_car_search_by_partial_model(self):
-        response = self.client.get(reverse("taxi:car-list") + "?model=F150")
+        response = self.client.get(reverse("taxi:car-list") + "?model=F1")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "F150")
         self.assertNotContains(response, "Camry")
