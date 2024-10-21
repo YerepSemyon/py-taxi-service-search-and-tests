@@ -1,10 +1,6 @@
-from audioop import reverse
-
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
-
-from taxi.models import Car, Manufacturer, Driver
 
 
 class AdminSiteTest(TestCase):
@@ -39,7 +35,8 @@ class AdminSiteTest(TestCase):
 
     def test_driver_creation_page_contains_license_number_field(self):
         """
-        Test that driver creation page contains license number field in the additional info section
+        Test that driver creation page contains license
+        number field in the additional info section
         """
         url = reverse("admin:taxi_driver_add")
         response = self.client.get(url)
